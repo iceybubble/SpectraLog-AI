@@ -1,73 +1,78 @@
-# React + TypeScript + Vite
+# SpectraLog AI - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern web interface for SpectraLog AI - AI-Powered, Explainable Forensic SIEM Platform.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Real-time Dashboard** - Monitor alerts and system metrics
+- **Logs Explorer** - Advanced filtering and search capabilities
+- **Timeline Visualization** - Interactive attack timeline reconstruction
+- **XAI Explainability** - AI-powered alert explanations with SHAP values
+- **Event Correlation** - Visual relationship graphs between security events
+- **Responsive Design** - Works on desktop and tablet devices
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** + **TypeScript**
+- **Vite** - Fast build tool
+- **Ant Design** - Enterprise UI components
+- **Apache ECharts** - Data visualization
+- **React Query** - Server state management
+- **Zustand** - Client state management
+- **React Router** - Navigation
+- **Axios** - API communication
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Install dependencies
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Start development server
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Build for production
+npm run build
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔧 Configuration
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the root directory:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+VITE_API_URL=http://localhost:8000
 ```
+
+## 🏗️ Project Structure
+
+```
+src/
+├── components/      # Reusable UI components
+├── pages/          # Page components
+├── services/       # API integration
+├── store/          # State management
+├── types/          # TypeScript types
+└── assets/         # Static assets
+```
+
+## 🔌 Backend Integration
+
+This frontend connects to the SpectraLog AI backend API. Make sure the backend is running on `http://localhost:8000` (or update `VITE_API_URL`).
+
+Required backend endpoints:
+- `GET /api/v1/logs` - Fetch logs
+- `GET /api/v1/alerts` - Fetch alerts
+- `GET /api/v1/correlation/timeline` - Timeline data
+- `GET /api/v1/xai/explain/:id` - XAI explanations
+- `GET /api/v1/correlation/graph/:id` - Correlation graph
+
+## 📄 License
+
+MIT License - Educational and Research Use
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
