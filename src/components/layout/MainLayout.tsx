@@ -15,7 +15,7 @@ export const MainLayout = () => {
       <Sidebar collapsed={collapsed} />
       <Layout
         style={{
-          marginLeft: collapsed ? 80 : 200,
+          marginLeft: collapsed ? 80 : 220,
           transition: 'all 0.2s',
           background: SOC.bg,
         }}

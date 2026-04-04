@@ -1,6 +1,11 @@
 import { Layout, Menu } from 'antd';
 import {
-  DashboardOutlined,
+  HomeOutlined,
+  FilterOutlined,
+  WarningOutlined,
+  ThunderboltOutlined,
+  GlobalOutlined,
+  DesktopOutlined,
   FileTextOutlined,
   AlertOutlined,
   ClockCircleOutlined,
@@ -22,39 +27,34 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const selectedMenuKey = location.pathname.startsWith('/alerts')
-    ? '/alerts'
-    : location.pathname;
+  const path = location.pathname;
+  const selectedKey = path.startsWith('/alerts') ? '/alerts' : path === '/' ? '/' : path;
 
   const menuItems: MenuProps['items'] = [
     {
-      key: '/',
-      icon: <DashboardOutlined />,
-      label: 'SOC Posture',
+      type: 'group',
+      label: collapsed ? '' : 'Home & posture',
+      children: [
+        { key: '/', icon: <HomeOutlined />, label: 'Home' },
+        { key: '/overview', icon: <FilterOutlined />, label: 'Overview' },
+        { key: '/severity', icon: <WarningOutlined />, label: 'Severity' },
+        { key: '/live-attacks', icon: <ThunderboltOutlined />, label: 'Live attacks' },
+        { key: '/threat-map', icon: <GlobalOutlined />, label: 'Threat map' },
+        { key: '/affected-systems', icon: <DesktopOutlined />, label: 'Affected systems' },
+      ],
     },
+    { type: 'divider' },
     {
-      key: '/logs',
-      icon: <FileTextOutlined />,
-      label: 'Logs Explorer',
+      type: 'group',
+      label: collapsed ? '' : 'Investigation',
+      children: [
+        { key: '/logs', icon: <FileTextOutlined />, label: 'Logs explorer' },
+        { key: '/alerts', icon: <AlertOutlined />, label: 'Alerts' },
+        { key: '/timeline', icon: <ClockCircleOutlined />, label: 'Timeline' },
+        { key: '/correlation', icon: <BranchesOutlined />, label: 'Correlation' },
+      ],
     },
-    {
-      key: '/alerts',
-      icon: <AlertOutlined />,
-      label: 'Alerts',
-    },
-    {
-      key: '/timeline',
-      icon: <ClockCircleOutlined />,
-      label: 'Timeline',
-    },
-    {
-      key: '/correlation',
-      icon: <BranchesOutlined />,
-      label: 'Correlation',
-    },
-    {
-      type: 'divider',
-    },
+    { type: 'divider' },
     {
       key: '/analytics',
       icon: <BarChartOutlined />,
@@ -76,7 +76,7 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
       trigger={null}
       collapsible
       collapsed={collapsed}
-      width={200}
+      width={220}
       style={{
         overflow: 'auto',
         height: '100vh',
@@ -113,7 +113,7 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
       <Menu
         theme="dark"
         mode="inline"
-        selectedKeys={[selectedMenuKey]}
+        selectedKeys={[selectedKey]}
         items={menuItems}
         onClick={handleMenuClick}
         style={{ background: 'transparent', border: 'none' }}
