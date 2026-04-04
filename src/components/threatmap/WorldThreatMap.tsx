@@ -6,6 +6,11 @@ import type { GeoOriginPoint } from '@/data/geoOrigins';
 import { colorForSeverity } from '@/data/geoOrigins';
 import { SOC } from '@/theme/socTokens';
 
+/** Ocean fill — saturated blue like Microsoft Sentinel workbooks */
+const MAP_OCEAN = '#1473d9';
+const MAP_LAND = '#030305';
+const MAP_BORDER = 'rgba(200, 225, 255, 0.55)';
+
 const WORLD_MAP_URL =
   'https://raw.githubusercontent.com/apache/echarts/master/test/data/map/json/world.json';
 
@@ -57,23 +62,33 @@ export const WorldThreatMap = ({ points, height = 420 }: WorldThreatMapProps) =>
 
   const scatterData = useMemo(
     () =>
-      points.map((p) => ({
-        name: p.country,
-        value: [p.lng, p.lat, p.count] as [number, number, number],
-        itemStyle: { color: colorForSeverity(p.severity) },
-        origin: p,
-      })),
+      points.map((p) => {
+        const color = colorForSeverity(p.severity);
+        return {
+          name: p.country,
+          value: [p.lng, p.lat, p.count] as [number, number, number],
+          itemStyle: {
+            color,
+            opacity: 0.42,
+            borderWidth: 1,
+            borderColor: 'rgba(255,255,255,0.45)',
+            shadowBlur: 28,
+            shadowColor: `${color}77`,
+          },
+          origin: p,
+        };
+      }),
     [points]
   );
 
   const option = useMemo(
     () => ({
-      backgroundColor: 'transparent',
+      backgroundColor: MAP_OCEAN,
       tooltip: {
         trigger: 'item' as const,
-        backgroundColor: SOC.bgElevated,
-        borderColor: SOC.border,
-        textStyle: { color: SOC.text },
+        backgroundColor: 'rgba(8, 12, 22, 0.92)',
+        borderColor: 'rgba(255,255,255,0.25)',
+        textStyle: { color: '#f0f4ff' },
         formatter: (params: {
           data?: { origin?: GeoOriginPoint; name?: string; value?: number[] };
         }) => {
@@ -82,10 +97,10 @@ export const WorldThreatMap = ({ points, height = 420 }: WorldThreatMapProps) =>
           return `
             <div style="padding:4px 2px;max-width:280px;">
               <strong>${o.country}</strong><br/>
-              <span style="color:${SOC.textMuted}">Events:</span> ${o.count.toLocaleString()}<br/>
-              <span style="color:${SOC.textMuted}">Sample IP:</span> <code>${o.sampleIp}</code><br/>
-              <span style="color:${SOC.textMuted}">Source:</span> ${o.source}<br/>
-              <span style="color:${SOC.textMuted}">Severity:</span> ${o.severity}
+              <span style="color:#9fb0d0">Events:</span> ${o.count.toLocaleString()}<br/>
+              <span style="color:#9fb0d0">Sample IP:</span> <code>${o.sampleIp}</code><br/>
+              <span style="color:#9fb0d0">Source:</span> ${o.source}<br/>
+              <span style="color:#9fb0d0">Severity:</span> ${o.severity}
             </div>
           `;
         },
@@ -97,12 +112,17 @@ export const WorldThreatMap = ({ points, height = 420 }: WorldThreatMapProps) =>
         center: [15, 24],
         scaleLimit: { min: 0.8, max: 6 },
         itemStyle: {
-          areaColor: '#12141c',
-          borderColor: '#2a3340',
+          areaColor: MAP_LAND,
+          borderColor: MAP_BORDER,
+          borderWidth: 0.75,
         },
         emphasis: {
           disabled: false,
-          itemStyle: { areaColor: '#1c2230' },
+          itemStyle: {
+            areaColor: '#101018',
+            borderColor: 'rgba(255,255,255,0.85)',
+            borderWidth: 1,
+          },
           label: { show: false },
         },
       },
@@ -114,11 +134,16 @@ export const WorldThreatMap = ({ points, height = 420 }: WorldThreatMapProps) =>
           data: scatterData,
           symbolSize: (val: number[]) => {
             const n = val[2] ?? 0;
-            return Math.min(48, 12 + Math.sqrt(n) * 0.65);
+            return Math.min(68, 14 + Math.sqrt(n) * 0.82);
           },
           emphasis: {
-            scale: 1.15,
-            itemStyle: { shadowBlur: 16, shadowColor: 'rgba(255,255,255,0.25)' },
+            scale: 1.1,
+            itemStyle: {
+              opacity: 0.58,
+              shadowBlur: 34,
+              borderWidth: 1.25,
+              borderColor: 'rgba(255,255,255,0.8)',
+            },
           },
         },
       ],
@@ -150,7 +175,7 @@ export const WorldThreatMap = ({ points, height = 420 }: WorldThreatMapProps) =>
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: SOC.card,
+          background: MAP_OCEAN,
           borderRadius: SOC.radius,
         }}
       >
@@ -162,7 +187,7 @@ export const WorldThreatMap = ({ points, height = 420 }: WorldThreatMapProps) =>
   return (
     <ReactECharts
       option={option}
-      style={{ height, width: '100%' }}
+      style={{ height, width: '100%', borderRadius: SOC.radius }}
       notMerge
       lazyUpdate
       opts={{ renderer: 'canvas' }}

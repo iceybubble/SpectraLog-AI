@@ -128,11 +128,12 @@ export const DEMO_GEO_ORIGINS: GeoOriginPoint[] = [
   },
 ];
 
+/** High-contrast “Sentinel workbook” palette for map bubbles */
 const severityColor: Record<GeoOriginPoint['severity'], string> = {
-  critical: '#d32f2f',
-  high: '#ef6c00',
-  medium: '#ffb300',
-  low: '#00897b',
+  critical: '#ff1744',
+  high: '#ff9100',
+  medium: '#ffea00',
+  low: '#00e5ff',
 };
 
 export function colorForSeverity(s: GeoOriginPoint['severity']): string {

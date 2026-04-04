@@ -187,7 +187,8 @@ export const ThreatMap = () => {
                 World map — log / attack origins by geography
               </Text>
             }
-            style={cardStyle}
+            style={{ ...cardStyle, overflow: 'hidden' }}
+            styles={{ body: { padding: 0 } }}
           >
             <WorldThreatMap points={points} height={440} />
           </Card>
