@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Space, Card, Button, Tag, Descriptions, Row, Col, Divider } from 'antd';
+import { Space, Card, Button, Tag, Descriptions } from 'antd';
 import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { alertsApi, xaiApi, correlationApi } from '@/services/api';

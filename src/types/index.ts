@@ -9,7 +9,15 @@ export interface Log {
   device_id?: string;
   user?: string;
   ip_address?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
+}
+
+/** Body for POST /api/v1/logs/search */
+export interface LogSearchBody {
+  query?: string;
+  filters?: Record<string, unknown>;
+  limit?: number;
+  offset?: number;
 }
 
 // Alert Types

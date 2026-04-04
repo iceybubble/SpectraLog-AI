@@ -21,6 +21,10 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const selectedMenuKey = location.pathname.startsWith('/alerts')
+    ? '/alerts'
+    : location.pathname;
+
   const menuItems: MenuProps['items'] = [
     {
       key: '/',
@@ -97,7 +101,7 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
       <Menu
         theme="dark"
         mode="inline"
-        selectedKeys={[location.pathname]}
+        selectedKeys={[selectedMenuKey]}
         items={menuItems}
         onClick={handleMenuClick}
       />

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Space, message } from 'antd';
+import { Space } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { MetricsCard } from '@/components/dashboard/MetricsCard';
 import { AlertFeed } from '@/components/dashboard/AlertFeed';

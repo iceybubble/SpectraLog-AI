@@ -7,6 +7,7 @@ import { LogsExplorer } from './pages/LogsExplorer';
 import { Timeline } from './pages/Timeline';
 import { AlertDetails } from './pages/AlertDetails';
 import { Correlation } from './pages/Correlation';
+import { Alerts } from './pages/Alerts';
 import './App.css';
 
 const queryClient = new QueryClient({
@@ -36,6 +37,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="logs" element={<LogsExplorer />} />
               <Route path="timeline" element={<Timeline />} />
+              <Route path="alerts" element={<Alerts />} />
               <Route path="alerts/:id" element={<AlertDetails />} />
               <Route path="correlation" element={<Correlation />} />
               <Route path="*" element={<Navigate to="/" replace />} />

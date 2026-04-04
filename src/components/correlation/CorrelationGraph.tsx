@@ -15,6 +15,19 @@ const nodeTypeColors: Record<string, string> = {
   file: '#eb2f96',
 };
 
+/** ECharts graph tooltip callback shape (narrowed for our series). */
+interface GraphTooltipParams {
+  dataType?: string;
+  data?: {
+    name?: string;
+    type?: string;
+    risk_score?: number;
+    relationship?: string;
+    source?: string;
+    target?: string;
+  };
+}
+
 const nodeTypeIcons: Record<string, string> = {
   ip: 'circle',
   device: 'rect',
@@ -49,26 +62,27 @@ export const CorrelationGraph = ({ data, loading }: CorrelationGraphProps) => {
       left: 'center',
     },
     tooltip: {
-      formatter: (params: any) => {
+      formatter: (params: GraphTooltipParams) => {
         if (params.dataType === 'node') {
           const nodeData = params.data;
           return `
             <div style="padding: 8px;">
-              <strong>${nodeData.name}</strong><br/>
-              <span style="color: #888;">Type: ${nodeData.type}</span><br/>
+              <strong>${nodeData?.name ?? ''}</strong><br/>
+              <span style="color: #888;">Type: ${nodeData?.type ?? ''}</span><br/>
               ${
-                nodeData.risk_score
+                nodeData?.risk_score
                   ? `<span style="color: #f5222d;">Risk Score: ${nodeData.risk_score}</span>`
                   : ''
               }
             </div>
           `;
-        } else if (params.dataType === 'edge') {
+        }
+        if (params.dataType === 'edge') {
           const edgeData = params.data;
           return `
             <div style="padding: 8px;">
-              <strong>${edgeData.relationship}</strong><br/>
-              <span style="color: #888;">${edgeData.source} → ${edgeData.target}</span>
+              <strong>${edgeData?.relationship ?? ''}</strong><br/>
+              <span style="color: #888;">${edgeData?.source ?? ''} → ${edgeData?.target ?? ''}</span>
             </div>
           `;
         }

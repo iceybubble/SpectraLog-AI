@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { Space, Card, Modal, Descriptions, Tag } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-import { LogFilters } from '@/components/logs/LogFilters';
+import { LogFilters, type LogFilterValues } from '@/components/logs/LogFilters';
 import { LogTable } from '@/components/logs/LogTable';
 import { logsApi } from '@/services/api';
 import type { Log } from '@/types';
 import { format } from 'date-fns';
 
 export const LogsExplorer = () => {
-  const [filters, setFilters] = useState<any>({});
+  const [filters, setFilters] = useState<{
+    source?: string;
+    severity?: string;
+  }>({});
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [selectedLog, setSelectedLog] = useState<Log | null>(null);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['logs', filters, page, pageSize],
     queryFn: () =>
       logsApi.getLogs({
@@ -23,8 +26,11 @@ export const LogsExplorer = () => {
       }),
   });
 
-  const handleFilter = (values: any) => {
-    setFilters(values);
+  const handleFilter = (values: LogFilterValues) => {
+    setFilters({
+      source: values.source,
+      severity: values.severity,
+    });
     setPage(1);
   };
 

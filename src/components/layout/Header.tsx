@@ -8,7 +8,6 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { useStore } from '@/store/useStore';
 
 const { Header: AntHeader } = Layout;
 

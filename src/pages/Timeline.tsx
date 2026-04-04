@@ -4,7 +4,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { TimelineChart } from '@/components/timeline/TimelineChart';
 import { correlationApi } from '@/services/api';
-import { format } from 'date-fns';
 
 const { RangePicker } = DatePicker;
 

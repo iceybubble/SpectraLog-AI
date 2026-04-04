@@ -7,6 +7,13 @@ interface TimelineChartProps {
   loading: boolean;
 }
 
+interface ScatterSeriesParams {
+  data?: {
+    name?: string;
+    value?: [string, number, number, string];
+  };
+}
+
 export const TimelineChart = ({ events, loading }: TimelineChartProps) => {
   if (loading) {
     return (
@@ -53,14 +60,16 @@ export const TimelineChart = ({ events, loading }: TimelineChartProps) => {
     },
     tooltip: {
       trigger: 'item',
-      formatter: (params: any) => {
-        const data = params.data.value;
+      formatter: (params: ScatterSeriesParams) => {
+        const data = params.data?.value;
+        if (!data) return '';
+        const [ts, srcIdx, severity, details] = data;
         return `
-          <strong>${params.data.name}</strong><br/>
-          Time: ${new Date(data[0]).toLocaleString()}<br/>
-          Source: ${sources[data[1]]}<br/>
-          Severity: ${data[2]}<br/>
-          ${data[3] ? `Details: ${data[3]}` : ''}
+          <strong>${params.data?.name ?? ''}</strong><br/>
+          Time: ${new Date(ts).toLocaleString()}<br/>
+          Source: ${sources[srcIdx] ?? sources[0]}<br/>
+          Severity: ${severity}<br/>
+          ${details ? `Details: ${details}` : ''}
         `;
       },
     },
@@ -95,16 +104,17 @@ export const TimelineChart = ({ events, loading }: TimelineChartProps) => {
       {
         type: 'scatter',
         data: seriesData,
-        symbolSize: (val: any) => {
-          // Size based on severity (1-5)
-          return Math.max(val[2] * 8, 10);
+        symbolSize: (raw: unknown) => {
+          if (!Array.isArray(raw) || typeof raw[2] !== 'number') return 10;
+          return Math.max(raw[2] * 8, 10);
         },
         itemStyle: {
-          color: (params: any) => {
-            const severity = params.data.value[2];
-            if (severity >= 4) return '#ff4d4f'; // Critical/High - Red
-            if (severity >= 3) return '#faad14'; // Medium - Orange
-            return '#52c41a'; // Low - Green
+          color: (params: ScatterSeriesParams) => {
+            const severity = params.data?.value?.[2];
+            if (typeof severity !== 'number') return '#52c41a';
+            if (severity >= 4) return '#ff4d4f';
+            if (severity >= 3) return '#faad14';
+            return '#52c41a';
           },
           opacity: 0.8,
         },
