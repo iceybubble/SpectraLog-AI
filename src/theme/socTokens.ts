@@ -1,0 +1,23 @@
+/** SOC dashboard palette aligned with dark operations consoles */
+export const SOC = {
+  bg: '#0b0c10',
+  bgElevated: '#12161c',
+  card: '#15191e',
+  cardHover: '#1a1f28',
+  border: '#2a3038',
+  borderSubtle: '#1f252d',
+  text: 'rgba(255, 255, 255, 0.88)',
+  textSecondary: 'rgba(255, 255, 255, 0.55)',
+  textMuted: '#8b929e',
+  primary: '#3d7eff',
+  blue: '#1254d3',
+  teal: '#00897b',
+  red: '#d32f2f',
+  orange: '#ef6c00',
+  amber: '#ffb300',
+  green: '#8bc34a',
+  purple: '#7c4dff',
+  criticalBg: 'linear-gradient(135deg, rgba(211, 47, 47, 0.2) 0%, rgba(239, 108, 0, 0.12) 100%)',
+  positiveBg: 'linear-gradient(135deg, rgba(139, 195, 74, 0.18) 0%, rgba(0, 137, 123, 0.1) 100%)',
+  radius: 8,
+} as const;

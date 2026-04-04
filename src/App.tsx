@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from 'antd';
+import { socAntdTheme } from '@/theme/socAntdTheme';
 import { MainLayout } from './components/layout/MainLayout';
 import { Dashboard } from './pages/Dashboard';
 import { LogsExplorer } from './pages/LogsExplorer';
@@ -23,14 +24,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#1890ff',
-            borderRadius: 6,
-          },
-        }}
-      >
+      <ConfigProvider theme={socAntdTheme}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainLayout />}>

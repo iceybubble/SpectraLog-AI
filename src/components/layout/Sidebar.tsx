@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { MenuProps } from 'antd';
+import { SOC } from '@/theme/socTokens';
 
 const { Sider } = Layout;
 
@@ -29,7 +30,7 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
     {
       key: '/',
       icon: <DashboardOutlined />,
-      label: 'Dashboard',
+      label: 'SOC Posture',
     },
     {
       key: '/logs',
@@ -75,6 +76,7 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
       trigger={null}
       collapsible
       collapsed={collapsed}
+      width={200}
       style={{
         overflow: 'auto',
         height: '100vh',
@@ -82,19 +84,29 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
         left: 0,
         top: 0,
         bottom: 0,
+        background: '#0d1117',
+        borderRight: `1px solid ${SOC.border}`,
       }}
     >
       <div
         style={{
-          height: '64px',
+          height: '56px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'rgba(255, 255, 255, 0.1)',
+          borderBottom: `1px solid ${SOC.borderSubtle}`,
+          background: 'rgba(0,0,0,0.25)',
         }}
       >
         {!collapsed && (
-          <h3 style={{ color: '#fff', margin: 0 }}>SpectraLog</h3>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ color: SOC.text, fontWeight: 700, fontSize: 15, letterSpacing: '-0.02em' }}>
+              SpectraLog
+            </div>
+            <div style={{ color: SOC.textMuted, fontSize: 10, textTransform: 'uppercase' }}>
+              SOC
+            </div>
+          </div>
         )}
       </div>
 
@@ -104,6 +116,7 @@ export const Sidebar = ({ collapsed }: SidebarProps) => {
         selectedKeys={[selectedMenuKey]}
         items={menuItems}
         onClick={handleMenuClick}
+        style={{ background: 'transparent', border: 'none' }}
       />
     </Sider>
   );
