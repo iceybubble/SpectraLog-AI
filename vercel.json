@@ -1,22 +1,6 @@
-# Create vercel.json for proper build settings
-@'
 {
-  "version": 2,
+  "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
-  "installCommand": "npm install",
-  "env": {
-    "VITE_USE_MOCK": "true"
-  },
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ]
+  "installCommand": "npm install"
 }
-
