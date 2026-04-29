@@ -60,6 +60,23 @@ export interface XAIExplanation {
   reasoning: string;
 }
 
+export interface AIInvestigationRequest {
+  question?: string;
+  include_recommendations?: boolean;
+  analyst_notes?: string;
+}
+
+export interface AIInvestigationResponse {
+  alert_id: string;
+  phase: string;
+  summary: string;
+  reasoning: string;
+  recommendations: string[];
+  confidence: number;
+  generated_at: string;
+  source: string;
+}
+
 // Correlation Graph
 export interface CorrelationNode {
   id: string;

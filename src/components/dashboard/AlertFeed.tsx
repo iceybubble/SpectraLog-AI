@@ -11,6 +11,8 @@ const { Text } = Typography;
 interface AlertFeedProps {
   alerts: Alert[];
   loading: boolean;
+  title?: string;
+  emptyText?: string;
 }
 
 const severityColors: Record<string, string> = {
@@ -20,7 +22,12 @@ const severityColors: Record<string, string> = {
   critical: SOC.red,
 };
 
-export const AlertFeed = ({ alerts, loading }: AlertFeedProps) => {
+export const AlertFeed = ({
+  alerts,
+  loading,
+  title = 'Critical & open alerts',
+  emptyText = 'No alerts match the current view filters.',
+}: AlertFeedProps) => {
   const navigate = useNavigate();
 
   const columns: ColumnsType<Alert> = [
@@ -118,7 +125,7 @@ export const AlertFeed = ({ alerts, loading }: AlertFeedProps) => {
       title={
         <Space>
           <Text strong style={{ color: SOC.text, fontSize: 15 }}>
-            Critical & open alerts
+            {title}
           </Text>
           {criticalCount > 0 ? (
             <Text style={{ color: SOC.red, fontWeight: 700 }}>!! {criticalCount} critical</Text>
@@ -148,6 +155,7 @@ export const AlertFeed = ({ alerts, loading }: AlertFeedProps) => {
           showTotal: (t) => `${t} cases`,
           size: 'small',
         }}
+        locale={{ emptyText }}
         scroll={{ x: 900 }}
       />
     </Card>

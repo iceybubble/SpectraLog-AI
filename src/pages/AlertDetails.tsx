@@ -4,6 +4,7 @@ import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { alertsApi, xaiApi, correlationApi } from '@/services/api';
 import { XAIExplainer } from '@/components/xai/XAIExplainer';
+import { AIInvestigationPanel } from '@/components/xai/AIInvestigationPanel';
 import { CorrelationGraph } from '@/components/correlation/CorrelationGraph';
 import { format } from 'date-fns';
 
@@ -120,6 +121,9 @@ export const AlertDetails = () => {
 
       {/* XAI Explanation */}
       <XAIExplainer explanation={explanation || null} loading={xaiLoading} />
+
+      {/* AI Investigation Layer (Phase 3) */}
+      {id ? <AIInvestigationPanel alertId={id} /> : null}
 
       {/* Correlation Graph */}
       <CorrelationGraph data={correlationGraph || null} loading={graphLoading} />

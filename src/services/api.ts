@@ -4,6 +4,8 @@ import type {
   Alert,
   TimelineEvent,
   XAIExplanation,
+  AIInvestigationRequest,
+  AIInvestigationResponse,
   CorrelationGraph,
   DashboardMetrics,
   PaginatedResponse,
@@ -135,6 +137,31 @@ export const xaiApi = {
     const response = await api.get(`/api/v1/xai/explain/${alertId}`);
     return response.data;
   },
+
+  investigateAlert: async (
+    alertId: string,
+    payload: AIInvestigationRequest,
+  ): Promise<AIInvestigationResponse> => {
+    if (mock) {
+      return {
+        alert_id: alertId,
+        phase: 'phase_3_correlation_enrichment_xai',
+        summary: 'Mock investigation summary for UI development.',
+        reasoning:
+          payload.question ??
+          'Mock mode is enabled. Backend AI investigation is not called in this mode.',
+        recommendations: payload.include_recommendations === false ? [] : [
+          'Validate suspicious entities with correlated events.',
+          'Escalate case if confidence remains high after log review.',
+        ],
+        confidence: 0.78,
+        generated_at: new Date().toISOString(),
+        source: 'mock-ai-layer',
+      };
+    }
+    const response = await api.post(`/api/v1/xai/investigate/${alertId}`, payload);
+    return response.data;
+  },
 };
 
 // Dashboard API
@@ -142,6 +169,26 @@ export const dashboardApi = {
   getMetrics: async (): Promise<DashboardMetrics> => {
     if (mock) return mockDashboardMetrics;
     const response = await api.get('/api/v1/dashboard/metrics');
+    return response.data;
+  },
+};
+
+// Cases API
+export const casesApi = {
+  createCase: async (payload: {
+    title: string;
+    description: string;
+    created_by?: string;
+  }): Promise<{ status: string; case: { case_id: string } & Record<string, unknown> }> => {
+    const response = await api.post('/api/v1/cases/', payload);
+    return response.data;
+  },
+
+  addCaseNote: async (
+    caseId: string,
+    payload: { content: string; created_by?: string },
+  ): Promise<{ status: string; case_id: string; note: Record<string, unknown> }> => {
+    const response = await api.post(`/api/v1/cases/${caseId}/notes`, payload);
     return response.data;
   },
 };
