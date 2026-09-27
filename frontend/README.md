@@ -1,4 +1,4 @@
-# SpectraLog AI - Frontend
+# SpectraLog AI - Frontend UI
 
 Modern web interface for SpectraLog AI, an AI-powered and explainable forensic SIEM platform.
 
