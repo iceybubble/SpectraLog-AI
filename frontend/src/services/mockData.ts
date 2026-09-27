@@ -9,7 +9,7 @@ import type {
 } from '@/types';
 
 export const isMockMode = (): boolean =>
-  import.meta.env.VITE_USE_MOCK === 'true';
+  import.meta.env.VITE_USE_MOCK !== 'false';
 
 const MOCK_LOGS: Log[] = Array.from({ length: 48 }, (_, i) => ({
   id: `log-${String(i + 1).padStart(4, '0')}`,
